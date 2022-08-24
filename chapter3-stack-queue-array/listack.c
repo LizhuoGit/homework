@@ -1,0 +1,92 @@
+#include "listack.h"
+
+bool InitStack(LiStack *S)
+{
+    (*S) = NULL;
+    return true;
+}
+
+bool StackEmpty(LiStack S)
+{
+    return S == NULL;
+}
+
+bool Push(LiStack *S, ElemType e)
+{
+    LinkNode *new = (LinkNode *)malloc(sizeof(LinkNode));
+    if(!new)
+        return false;
+    new->data = e;
+    new->next = (*S);
+    (*S) = new;
+    return true;
+}
+
+bool Pop(LiStack *S, ElemType *e)
+{
+    if (StackEmpty(*S))
+        return false;
+    if (e)
+        *e = (*S)->data;
+    LinkNode *current = (*S);
+    (*S) = current->next;
+    free(current);
+    return true;
+}
+
+bool GetTop(LiStack S, ElemType *e)
+{
+    if (StackEmpty(S))
+        return false;
+    if (e)
+        *e = S->data;
+    return true;
+}
+
+bool DestroyStack(LiStack *S)
+{
+    if(!(*S))
+        return false;
+    while(!StackEmpty(*S))
+        Pop(S,NULL);
+    return true;
+}
+
+// int main(void)
+// {
+//     LiStack S;
+//     InitStack(&S);
+//     if (StackEmpty(S))
+//         puts("当前栈为空");
+//     else
+//         puts("当前栈不为空");
+//     Push(&S, 1);
+//     Push(&S, 2);
+//     Push(&S, 3);
+//     Push(&S, 4);
+//     Push(&S, 5);
+//     Push(&S, 6);
+//     int e;
+//     while (!StackEmpty(S))
+//     {
+//         Pop(&S, &e);
+//         printf("%-3d", e);
+//     }
+//     putchar('\n');
+//     Push(&S, 1);
+//     Push(&S, 2);
+//     Push(&S, 3);
+//     Push(&S, 4);
+//     Push(&S, 5);
+//     Push(&S, 6);
+//     DestroyStack(&S);
+//     if(StackEmpty(S))
+//         puts("栈已空");
+//     else 
+//         puts("栈未空");
+//     if(S)
+//         puts("当前栈指针指向对象");
+//     else 
+//         puts("当前栈指针指向空");
+//     return 0;
+// }
